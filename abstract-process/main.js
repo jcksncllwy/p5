@@ -14,9 +14,15 @@ function setup(){
     canvasX = windowWidth;
     canvasY = windowHeight;
     createCanvas(canvasX, canvasY);
-    boundingCircle.size = canvasX/4;
+    boundingCircle.size = canvasY/2;
     seed();
     noStroke();
+    fullscreen();
+}
+
+function mousePressed() {
+    var fs = fullscreen();
+    fullscreen(!fs);
 }
 
 var collisionMemo = {};
@@ -41,9 +47,9 @@ function draw(){
             if(n1!=n2 && !hasCollided){
                 var collision = node1.collide(node2);
                 if(collision){
-                    var node1IsBigger = node1.size>node2.size;
-                    node1.r+= node1IsBigger ? 1 : -1;
-                    node2.r+= node1IsBigger ? -1 : 1;
+                    var node1IsOlder = node1.age>node2.age;
+                    node1.r+= node1IsOlder ? 1 : -1;
+                    node2.r+= node1IsOlder ? -1 : 1;
                     if(node1.r<0){node1.r=0}
                     if(node2.r<0){node2.r=0}
                     node1.theta+=0.005;

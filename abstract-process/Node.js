@@ -9,9 +9,9 @@ class Node{
         this.age = 0;
         this.timeToReproduce = 500;
         this.maxAge = random(600,800);
-        this.maxGrowth = random(10,50);
+        this.maxGrowth = random(40,50);
         this.fatigue = 0;
-        this.fatigueLimit = 100;
+        this.fatigueLimit = 1000;
         this.afterImages = [];
         this.afterImageCount = 10;
     }
@@ -24,11 +24,14 @@ class Node{
     }
 
     draw(){
+        /*
         for(var i = 0; i<this.afterImages.length; i++){
             var image = this.afterImages[i];
             fill(this.color(map(i,0,this.afterImages.length,0,255)));
             ellipse(image.x,image.y,image.size, image.size);
         }
+        */
+        fill(this.color(255));
         var c = this.cartesian();
         ellipse(c.x,c.y,this.size,this.size);
         if(this.afterImages.length>this.afterImageCount){

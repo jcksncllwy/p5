@@ -41,10 +41,13 @@ function draw(){
             if(n1!=n2 && !hasCollided){
                 var collision = node1.collide(node2);
                 if(collision){
-                    node1.r+=node1.size/50;
-                    node2.r-=node2.size/50;
-                    node1.theta+=node1.size*0.001;
-
+                    var node1IsBigger = node1.size>node2.size;
+                    node1.r+= node1IsBigger ? 1 : -1;
+                    node2.r+= node1IsBigger ? -1 : 1;
+                    if(node1.r<0){node1.r=0}
+                    if(node2.r<0){node2.r=0}
+                    node1.theta+=0.005;
+                    node2.theta-=0.005;
                 }
                 collisionMemo[collisionId] = true;
             }
@@ -57,6 +60,9 @@ function draw(){
 
     t++;
     t=t%99999;
+    if(t%500==0){
+        console.log(nodes.length);
+    }
 }
 
 function seed(){

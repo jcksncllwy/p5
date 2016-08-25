@@ -11,7 +11,7 @@ class Node{
         this.maxAge = random(600,800);
         this.maxGrowth = random(10,50);
         this.fatigue = 0;
-        this.fatigueLimit = 100000;
+        this.fatigueLimit = 100;
         this.afterImages = [];
         this.afterImageCount = 10;
     }
@@ -42,7 +42,7 @@ class Node{
         if(this.hasNotMoved()){
             this.fatigue = 0;
         } else {
-            //this.fatigue++;
+            this.fatigue++;
         }
         if(this.fatigue>this.fatigueLimit){
             this.age = this.maxAge;
@@ -58,7 +58,7 @@ class Node{
     grow(){
         this.age++;
         if(this.age>this.timeToReproduce && this.age<this.maxAge){
-            //random()>0.99?this.reproduce():null;
+            random()>0.99?this.reproduce():null;
         }
         if(this.size<this.maxGrowth){
             this.size+=0.1;

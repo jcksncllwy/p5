@@ -44,7 +44,7 @@ function draw(){
                     node1.r+=node1.size/50;
                     node2.r-=node2.size/50;
                     node1.theta+=node1.size*0.001;
-                    node2.theta-=node2.size*0.001;
+
                 }
                 collisionMemo[collisionId] = true;
             }
@@ -56,9 +56,6 @@ function draw(){
     pop();
 
     t++;
-    if(t%10==0){
-        nodes.push(new Node(random(50),0,0, nodes));
-    }
     t=t%99999;
 }
 

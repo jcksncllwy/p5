@@ -1,7 +1,7 @@
 var canvasX;
 var canvasY;
 var nodes = [];
-var nodeCount = 2;
+var nodeCount = 10;
 var nodeTick = 50;
 var t = 0;
 var boundingCircle = {
@@ -52,8 +52,10 @@ function draw(){
                     node2.r+= node1IsOlder ? -1 : 1;
                     if(node1.r<0){node1.r=0}
                     if(node2.r<0){node2.r=0}
-                    node1.theta+=0.005;
-                    node2.theta-=0.005;
+                    if(!Math.abs(node1.blue-node2.blue)<10){
+                        node1.theta+=0.005;
+                        node2.theta-=0.005;
+                    }
                 }
                 collisionMemo[collisionId] = true;
             }

@@ -58,7 +58,7 @@ function setGradient(x, y, w, h, c1, c2, axis) {
   noFill();
 
   if (axis == Y_AXIS) {  // Top to bottom gradient
-    for (var i = y; i <= y+h; i++) {
+    for (var i = y; i <= y+h; i+=5) {
       var inter = map(i, y, y+h, 0, 1);
       var c = lerpColor(c1, c2, inter);
       stroke(c);
@@ -66,7 +66,7 @@ function setGradient(x, y, w, h, c1, c2, axis) {
     }
   }  
   else if (axis == X_AXIS) {  // Left to right gradient
-    for (var i = x; i <= x+w; i++) {
+    for (var i = x; i <= x+w; i+=5) {
       var inter = map(i, x, x+w, 0, 1);
       var c = lerpColor(c1, c2, inter);
       stroke(c);

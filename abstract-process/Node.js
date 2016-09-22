@@ -80,13 +80,13 @@ class Node{
     }
 
     reproduce(){
-        this.nodes.push(new Node(this.r-this.size/2,this.theta,0,this.nodes, random(this.blue-1, this.blue+1)));
+        this.nodes.push(new Node(this.r-this.size/2,this.theta,0,this.nodes, this.blue));
     }
 
     color(alpha){
         return color(map(this.age, 0, this.maxAge, 0, 255),
                      map(this.r, 0, boundingCircle.size/2, 255, 0),
-                     this.blue, alpha);
+                     map(this.age, 0, this.maxAge, 255, 0), alpha);
     }
 
     collide(node){

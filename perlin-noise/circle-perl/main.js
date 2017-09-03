@@ -24,11 +24,11 @@ var t=0;
 function draw(){
     clear();
     push();
-    var particleSize = 100;
+    var particleSize = 50;
     translate(particleSize/4,particleSize/4);
     for(var x=-100; x<canvasX+100; x+=particleSize+20){
         for(var y=-100; y<canvasY+100; y+=particleSize+20){
-            drawVoidParticle(x,y,100);
+            drawVoidParticle(x+(sin(t*0.1)),y+(sin(t*0.01)),50);
         }
     }
 

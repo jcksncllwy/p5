@@ -1,0 +1,12 @@
+{
+  "name": "font-server",
+  "version": "0.0.0",
+  "description": "Font server",
+  "main": "index.js",
+  "dependencies": {
+    "express": "3.*.*"    
+  },
+  "repository": "",
+  "author": "Jackson Callaway",
+  "license": "MIT"
+}

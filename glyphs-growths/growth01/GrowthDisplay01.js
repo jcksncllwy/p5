@@ -22,8 +22,8 @@ function setup(){
 	canvasX = windowWidth;
 	canvasY = windowHeight;
 
-	cellCountX = Math.floor(windowWidth/4);
-	cellCountY = Math.floor(windowHeight/4);
+	cellCountX = Math.floor(windowWidth/40);
+	cellCountY = Math.floor(windowHeight/40);
 
 	glyphCountX = 1;
 	glyphCountY = 1;
@@ -44,10 +44,22 @@ function setup(){
 	glyph.seed();
 }
 
+
+function mousePressed() {
+	var fs = fullscreen();
+	fullscreen(!fs);
+}
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+	canvasX = windowWidth;
+	canvasY = windowHeight;
+}
+
 function drawGlyph(glyph){
 	for(var x=0;x<cellCountX;x++){
 		for(var y=0;y<cellCountY;y++){
-			var cellVal = this.glyph.grid.getCell([x,y]);			
+			var cellVal = this.glyph.grid.getCell([x,y]);
 			if(cellVal>=1){
 				fill(color(0, 255, 55*cellVal));				
 				rect(x*cellSizeX, y*cellSizeY, cellSizeX, cellSizeY);

@@ -1,6 +1,6 @@
 var margin = 0
-var weAreGiffing = true
-var numFrames = 48
+var weAreGiffing = false
+var numFrames = 60
 var frameCount = 0
 var canvasSize;
 
@@ -18,7 +18,7 @@ function draw(){
   background(0)
 
   var loopedFrameCount = (frameCount-1)%numFrames
-  t = loopedFrameCount*(1/numFrames)  
+  t = loopedFrameCount*(1/numFrames) 
 
   // Draws every pixel
   for(var i=margin;i<width-margin;i++){
@@ -36,17 +36,37 @@ function draw(){
   //rect(csz/2, csz/2, size, size )
 
 	if(weAreGiffing){
-		encoder.addFrame(context)
-    frameCount++
+		encoder.addFrame(context)    
     if(frameCount>=numFrames){
       endTheGifThing()
     }
 	}
+  frameCount++
 }
 
 var pixelColorMethods = [
   function(x,y,t){
-    
+
+    var scalarOffset1 = centerScalarOffset(
+                          canvasSize/2,
+                          canvasSize/2,
+                          0.05, x,y)
+    var waveform1 = sin(TWO_PI*(t+scalarOffset1))
+    var waveZeroToOne1 = map(waveform1,-1,1,0,1)
+
+    var scalarOffset2 = centeredNoiseScalarOffset(
+                          canvasSize/2,
+                          canvasSize/2,
+                          x, y, 0.003, 10)
+    var waveform2 = sin(TWO_PI*(t+scalarOffset2))
+    var waveZeroToOne2 = map(waveform2,-1,1,0,1)
+
+    var distance = dist(canvasSize/2,canvasSize/2,x,y)
+    var distanceDampening = map(easeM(map(distance, 0,canvasSize/2,0,1), 0.9, 1.2, 5),0,1,1,0)
+
+    var avgWave = (waveZeroToOne1+(waveZeroToOne2))/2
+
+    return color(255*ease(avgWave,10)*distanceDampening)
   },
   function (x,y,t){
     var baseNoisePower = 11
@@ -69,7 +89,6 @@ var pixelColorMethods = [
     var distanceColorDampening = map(ease(map(distance, 0,canvasSize/2,0,1), 5),0,1,1,0)
     return color(255*waveZeroToOne1*distanceColorDampening, 255*waveZeroToOne2*distanceColorDampening, 255*waveZeroToOne3*distanceColorDampening)
   },
-
   function (x,y,t){
     var scalarOffset1 = noiseScalarFieldOffset(x,y, 20,0.005,0)
     var waveform1 = sin(TWO_PI*(t+scalarOffset1))
@@ -119,9 +138,9 @@ function centeredNoiseScalarOffset(centerX,centerY, x,y, noiseScale,noiseIntensi
   return result
 }
 
-function centerScalarOffset(centerX,centerY, x,y){
+function centerScalarOffset(centerX,centerY,scale,x,y){
   distance = dist(x,y,centerX,centerY)
-  return 0.05*distance
+  return scale*distance
 }
 
 function noiseScalarFieldOffset(x,y,amp,scale,offset){
@@ -129,8 +148,15 @@ function noiseScalarFieldOffset(x,y,amp,scale,offset){
   return result
 }
 
-function linearScalarFieldOffset(x,y){
-  return 0.05*x+0.05*y;
+function linearScalarFieldOffset(x,y,scale){
+  return scale*x+scale*y;
+}
+
+function easeM(p, m, s, g){
+  if (p < m)
+    return 0.5 * pow(s*p, g)
+  else
+    return 1 - 0.5 * pow(s*(1 - p), g)
 }
 
 function ease(p, g){

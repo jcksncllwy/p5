@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<script src="../libs/p5.min.js"></script>
+		<script type="text/javascript" src="../libs/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../libs/lodash.min.js"></script>
+		<script type="text/javascript" src="../libs/LZWEncoder.js"></script>
+		<script type="text/javascript" src="../libs/NeuQuant.js"></script>
+		<script type="text/javascript" src="../libs/GIFEncoder.js"></script>
+		<script type="text/javascript" src="../libs/b64.js"></script>
+		<script src="./main.js"></script>		
+		<link href="./style.css" rel="stylesheet">
+		<style>
+			body{
+				padding:0;
+				margin:0;
+			}
+			.controls{
+				position: absolute;
+				width: 500px;
+				background-color: rgba(255,255,255,0.1);
+				display: flex;
+				flex-direction: column;
+				padding: 10px;
+				color: white;
+			}
+
+			.controls.hidden{
+				visibility: hidden;
+			}
+
+			.controls input{
+				margin-bottom: 10px;
+			}
+
+			.controls button{
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="controls">
+			<div>
+				<div>X COORD</div>
+				<div>
+					<span>Amp1: </span><input id="ampX1" type="number" /><span></span>
+				</div>
+				<div>
+					<span>Amp1 Freq: cos(</span><input id="ampX1Freq" type="number" /><span>)</span>
+				</div>
+				<div>
+					<span>Freq1: sin(</span><input id="freqX1" type="number" /><span>)</span>
+				</div>
+				<div>
+					<span>Amp2: </span><input id="ampX2" type="number" /><span></span>
+				</div>
+				<div>
+					<span>Amp2 Freq: cos(</span><input id="ampX2Freq" type="number" /><span>)</span>
+				</div>
+				<div>
+					<span>Freq2: cos(</span><input id="freqX2" type="number" /><span>)</span>
+				</div>		
+							
+			</div>
+			<div>
+				<div>Y COORD</div>
+				<div>
+					<span>Amp1: </span><input id="ampY1" type="number" /><span></span>
+				</div>
+				<div>
+					<span>Amp1 Freq: cos(</span><input id="ampY1Freq" type="number" /><span>)</span>
+				</div>
+				<div>
+					<span>Freq1: cos(</span><input id="freqY1" type="number" /><span>)</span>
+				</div>
+				<div>
+					<span>Amp2: </span><input id="ampY2" type="number" /><span></span>
+				</div>
+				<div>
+					<span>Amp2 Freq: cos(</span><input id="ampY2Freq" type="number" /><span>)</span>
+				</div>
+				<div>
+					<span>Freq2: sin(</span><input id="freqY2" type="number" /><span>)</span>
+				</div>
+			</div>
+			<div>PERSISTENCE:<input id="persistence" type="number" /></div>
+			<button onclick="handleNewInputs()">GO</button>
+			<button onclick="hideControls()">HIDE</button>
+			<button onclick="handleClear()">CLEAR</button>
+			<button onclick="handlePause()">PAUSE</button>
+		</div>
+	</body>
+</html>

@@ -182,13 +182,13 @@ for(var i=-5; i<5; i++){
 
   fill(255,0,0);
   var speedWave = 0.1*sin(0.02*t);
-  orbitRing(6, 0.2, true);
+  orbitRing(9, 0.4, true);
 
   fill(0,255,0);
-  orbitRing(6, 0.4, true);
+  orbitRing(9, 0.4, true);
 
   fill(0,0,255);
-  orbitRing(6, 0.8, true);
+  orbitRing(9, 0.4, true);
 
 }
 

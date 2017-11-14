@@ -9,8 +9,8 @@ let canvasY = 300
 let t = 0
 
 var once = false
-var weAreGiffing = false
-var numFrames = 120
+var weAreGiffing = true
+var numFrames = 450
 var frameCount = 0
 
 

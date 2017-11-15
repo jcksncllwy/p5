@@ -1,0 +1,94 @@
+<!Doctype html>
+<html>
+<head>
+	<script src="../libs/p5.min.js"></script>
+	<script src="../libs/lodash.min.js"></script>
+	<script src="../libs/CCapture.all.min.js"></script>
+	<script src="../libs/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+	<script type="text/javascript" src="../libs/LZWEncoder.js"></script>
+	<script type="text/javascript" src="../libs/NeuQuant.js"></script>
+	<script type="text/javascript" src="../libs/GIFEncoder.js"></script>
+	<script type="text/javascript" src="../libs/b64.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<script src="./main.js"></script>
+	<link href="./style.css" rel="stylesheet">
+	<style>
+		body{
+			padding:0;
+			margin:0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			background: black;
+		}
+		.page-container{
+			padding: 50px;
+			width: 100%;
+			max-width: 800px;
+			box-sizing: border-box;
+		}
+		.input-container input{
+			width: 100%;
+			padding: 1px 5px;
+    		box-sizing: border-box;
+    		font-size: 24px;
+    		text-transform: uppercase;
+    		border: 1px solid white;
+    		background: black;
+    		color: black;
+		}
+		.input-container input:focus{
+			color: white;
+		}
+		.btn-container{
+			width: 100%;
+			margin-top:25px;
+			text-align: right;
+		}
+		.copy-btn{
+			font-family: "Roboto Mono", monospace;
+			text-transform: uppercase;
+			border: none;
+			background: black;
+			color: white;
+		}
+		.copy-btn:hover{
+			text-decoration: underline;
+			cursor: pointer;
+		}
+		.copy-btn:focus{
+			text-decoration: underline;
+			cursor: pointer;
+		}
+		.text-container{
+			padding-top: 10px;
+			font-size: 36px;
+			font-family: "Roboto Mono", monospace;
+			overflow-wrap: break-word;
+			text-transform: uppercase;
+			text-align: justify;
+			color: white;
+		}
+		.message-letter{
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div class="page-container">
+		<div class="input-container">
+			<input type="text" id="message-input" value="hello my name is jackson"/>
+		</div>
+		<div class="btn-container">
+		<a class="copy-btn" data-clipboard-text="">
+		    Copy to clipboard
+		</a>
+		</div>
+		<div class="text-container">
+			
+		</div>
+	</div>
+</body>
+</html>

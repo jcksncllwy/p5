@@ -40,17 +40,17 @@ let colors = [
 '#3B3F42'
 ]
 
-let max_depth = 4
+let max_depth = 5
 let build_subdivision_tree = (depth)=>{
 	let tree = {}
-	tree.division = random(1)
+	tree.id = random(1)
 	tree.c = color(pick(colors))
 	tree.vertical_subdivision = coin_flip()
 	if(depth<max_depth){
 		tree.subtrees = [
 			build_subdivision_tree(depth+1),
 			build_subdivision_tree(depth+1)
-		]		
+		]
 	}
 	return tree
 }
@@ -90,6 +90,7 @@ let draw_subdivision_tree = (depth, bounds, tree)=>{
 		fill(tree.c)
 		draw_subdivision(bounds)
 	} else {
+		
 		let min_bound
 		let max_bound
 
@@ -100,35 +101,21 @@ let draw_subdivision_tree = (depth, bounds, tree)=>{
 			min_bound = bounds.y_min+min_subdivision_size
 			max_bound = bounds.y_max-min_subdivision_size
 		}
-
-		let pixel_bound = map(tree.division, 
-			0,1, 
-			min_bound, max_bound
-		)
-		let dist_to_min = pixel_bound-min_bound
-		let dist_to_max = max_bound-pixel_bound
-		let noise_offset = map(noise(t*0.001+tree.division*1000), 0,1, -dist_to_min,dist_to_max)
-		//let sine_offset = map(sin(t*0.001+tree.division*1000), -1,1, min_bound,max_bound)
-		pixel_bound = pixel_bound+noise_offset
-		if(pixel_bound<min_bound){
-			pixel_bound = min_bound
-		}
-		if(pixel_bound>max_bound){
-			pixel_bound = max_bound
-		}
+		let time_curve = 1-pcurve((t*0.001+tree.id)%1, 3,2)
+		let division = map( time_curve, 0,1, min_bound,max_bound )
 
 		let bounds0
 		let bounds1
 		if(tree.vertical_subdivision){
 			bounds0 = {
 				x_min: bounds.x_min,
-				x_max: pixel_bound,
+				x_max: division,
 				y_min: bounds.y_min,
 				y_max: bounds.y_max,
 			}
 
 			bounds1 = {
-				x_min: pixel_bound,
+				x_min: division,
 				x_max: bounds.x_max,
 				y_min: bounds.y_min,
 				y_max: bounds.y_max,
@@ -138,13 +125,13 @@ let draw_subdivision_tree = (depth, bounds, tree)=>{
 				x_min: bounds.x_min,
 				x_max: bounds.x_max,
 				y_min: bounds.y_min,
-				y_max: pixel_bound,
+				y_max: division,
 			}
 
 			bounds1 = {
 				x_min: bounds.x_min,
 				x_max: bounds.x_max,
-				y_min: pixel_bound,
+				y_min: division,
 				y_max: bounds.y_max,
 			}
 		}
@@ -232,6 +219,13 @@ let recursive_subdivision = (depth, bounds, thing_to_do)=>{
 			y:[bounds.y[0],bounds.y[1]]
 		},thing_to_do)
 	}
+}
+
+//  Function from Iñigo Quiles 
+//  www.iquilezles.org/www/articles/functions/functions.htm
+let pcurve = ( x, a, b )=>{
+    let k = pow(a+b,a+b) / (pow(a,a)*pow(b,b));
+    return k * pow( x, a ) * pow( 1.0-x, b );
 }
 
 let pick = (arr)=>{

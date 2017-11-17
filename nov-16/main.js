@@ -8,7 +8,7 @@ let t = 0
 let once = false
 let done = false
 
-var weAreGiffing = false
+var weAreGiffing = true
 var numFrames = 120
 var frameCount = 0
 
@@ -24,6 +24,7 @@ var setup = ()=>{
 	}
 
 	rectMode(CORNERS)
+	blendMode(ADD)
 }
 
 var draw = ()=>{
@@ -36,26 +37,42 @@ var draw = ()=>{
 		noFill()
 		stroke(255)
 		strokeWeight(1)
-		rect(100,100,canvasX-100,canvasY-100)
+		rect(200,200,canvasX-200,canvasY-200)
 		let num_lines = 20
 		let inc = (canvasX-200)/num_lines
 		let line_width = 6
 		let count = 0
 
-		for(let i=-inc; i<canvasX-100 + inc*2; i+=inc){
-			fill(255)
+		for(let i=-inc*2; i<canvasX-100 + inc*4; i+=inc){
 			noStroke()
-			let wav1 = map(sin(TWO_PI*t+count*0.5),-1,1,-inc*2,inc*2)
-			let wav1a = map(sin(TWO_PI*t+PI+count),-1,1,0,line_width)
-
-			let wav2 = map(sin(TWO_PI*t+PI+count*0.5),-1,1,-inc*2,inc*2)
-			let wav2a = map(sin(TWO_PI*t+count),-1,1,0,line_width)
+			push()
+			translate(i+line_width/2, canvasY/2)
+			rotate(map(sin(TWO_PI*t+count*0.1), -1,1, -PI/2, PI/2))
+			fill(255,0,0)
 			quad(
-				i-line_width/2+wav1,100,
-				i+line_width/2+wav1,100,
-				i+line_width/2+wav2 ,canvasY-100,
-				i-line_width/2+wav2,canvasY-100
+				-line_width/2,-100,
+				 line_width/2,-100,
+				 line_width/2,100,
+				-line_width/2,100
 			)
+			rotate(sin(TWO_PI*t)*0.15)
+			fill(0,255,0)
+			quad(
+				-line_width/2,-100,
+				 line_width/2,-100,
+				 line_width/2,100,
+				-line_width/2,100
+			)
+			rotate(sin(TWO_PI*t)*0.15)
+			fill(0,0,255)
+			quad(
+				-line_width/2,-100,
+				 line_width/2,-100,
+				 line_width/2,100,
+				-line_width/2,100
+			)
+
+			pop()
 			count++
 		}
 

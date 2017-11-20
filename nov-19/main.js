@@ -39,7 +39,7 @@ var draw = ()=>{
 		let frame = 100
 		let innerX = canvasX-frame*2
 		let innerY = canvasY-frame*2
-		let grating_size = 800
+		let grating_size = 1000
 		let grating_width = 80
 
 		for(var i=0; i<5; i++){
@@ -52,7 +52,7 @@ var draw = ()=>{
 			let loopingXRight = (((frameCount*2*noise(i)) % (canvasX + grating_size) ) - grating_size)
 			let loopingXLeft = (((frameCount*2*noise(i)) % (canvasX + grating_size) ) - grating_size)
 
-			translate( osc1*grating_size/2 + grating_size/2, 0)
+			translate( osc1*grating_size/5 + grating_size/5, 0)
 
 			
 			let n = floor(noise(i*30)*3)

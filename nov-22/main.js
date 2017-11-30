@@ -2,14 +2,14 @@
 Trying for something like this http://doseofdesign.me/post/166964076233
 */
 
-let canvasX
-let canvasY
+let canvasX = 500
+let canvasY = 500
 let t = 0
 let once = false
 let done = false
 
 var weAreGiffing = false
-var numFrames = 120
+var numFrames = 400
 var frameCount = 0
 
 var setup = ()=>{
@@ -23,9 +23,10 @@ var setup = ()=>{
 		startTheGifThing()
 	}
 
-	rectMode(CORNERS)
 	blendMode(ADD)
+	rectMode(CORNERS)
 }
+
 
 var draw = ()=>{
 	var loopedFrameCount = (frameCount-1)%numFrames
@@ -34,57 +35,39 @@ var draw = ()=>{
 		clear()
 		background(0)
 
-		noFill()
-		stroke(255)
-		strokeWeight(1)
-		rect(200,200,canvasX-200,canvasY-200)
-		let num_lines = 20
-		let inc = (canvasX-200)/num_lines
-		let line_width = 6
-		let count = 0
 
-		for(let i=-inc*2; i<canvasX-100 + inc*4; i+=inc){
-			noStroke()
-			push()
-			translate(i+line_width/2, canvasY/2)
-			rotate(map(sin(TWO_PI*t+count*0.1), -1,1, -PI/2, PI/2))
-			fill(255,0,0)
-			quad(
-				-line_width/2,-100,
-				 line_width/2,-100,
-				 line_width/2,100,
-				-line_width/2,100
-			)
-			rotate(sin(TWO_PI*t)*0.15)
-			fill(0,255,0)
-			quad(
-				-line_width/2,-100,
-				 line_width/2,-100,
-				 line_width/2,100,
-				-line_width/2,100
-			)
-			rotate(sin(TWO_PI*t)*0.15)
-			fill(0,0,255)
-			quad(
-				-line_width/2,-100,
-				 line_width/2,-100,
-				 line_width/2,100,
-				-line_width/2,100
-			)
+		let cell_size = 65
+		let bar_width = 4
+		let bar_count = 4
+		for(var x=-cell_size; x<canvasX+cell_size; x+=cell_size){
+			for(var y=-cell_size; y<canvasY+cell_size; y+=cell_size){
 
-			pop()
-			count++
+				let oscX = map(x,0,canvasX,-canvasX/2,canvasX/2)
+				let osc = sin(t*TWO_PI + oscX/4 + y/4)
+				let osc2 = sin(t*TWO_PI + oscX/4 + y/4 + PI/2)
+
+				push()
+				translate(x,y)
+			
+				rotate(PI/2*map(osc,-1,1,0,1) )
+				//translate(0,-cell_size)
+				
+				draw_grating(color(255,0,0), bar_count, bar_width, cell_size)
+				rotate(osc2*0.05)
+				draw_grating(color(0,255,0), bar_count, bar_width, cell_size)
+				rotate(osc2*0.05)
+				draw_grating(color(0,0,255), bar_count, bar_width, cell_size)
+				
+				pop()
+			}
 		}
 
-		fill(0)
-		noStroke()
-		rect(0,0,100,canvasY)
-		rect(0,0,canvasX,100)
-		rect(canvasX-99,0,canvasX,canvasY)
-		rect(0,canvasY-99,canvasX,canvasY)
 
 		if(once) done = true
 	}
+
+	
+	
 	
 
 	if(weAreGiffing){
@@ -97,6 +80,19 @@ var draw = ()=>{
 
 }
 
+
+let draw_grating = (bar_color=255, count, bar_width, frameX=400,frameY=false)=>{
+	if(!frameY) frameY = frameX
+	let xInc = (frameX/count) + ((frameX/count)-bar_width)/(count-1)
+
+	fill(0)
+	//rect(1,1,frameX-1,frameY-1)
+	for(var i=0; i<count; i++){
+		noStroke()
+		fill(bar_color)
+		rect(i*xInc,0, i*xInc+bar_width, frameY)
+	}
+}
 
 
 //tweenity goes from 0 to colors.length-1
@@ -164,7 +160,6 @@ var mousePressed = ()=>{
 
 var mouseReleased = ()=>{
 	console.log('mouse released')
-	subdivision_tree = build_subdivision_tree(0)
 }
 
 var mouseDragged = ()=>{
